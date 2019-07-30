@@ -3,13 +3,28 @@ import './App.css';
 import { Board } from './components/Board/Board';
 
 const words: Array<string> = [
-  'sandia',
-  'jamon',
-  'pomelo',
-  'auto',
-  'xilofon',
-  'batata',
-  'agua'
+  'abuela',
+  'abuelo',
+  'esposa',
+  'esposo',
+  'hermana',
+  'hermano',
+  'hija',
+  'hijo',
+  'madre',
+  'nieta',
+  'nieto',
+  'padre',
+  'prima',
+  'primo',
+  'tía',
+  'tío',
+  'sobrino',
+  'sobrina',
+  'bisabuelo',
+  'bisabuela',
+  'yerno',
+  'nuera'
 ];
 
 const App: React.FC = () => {
