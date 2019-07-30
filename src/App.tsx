@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Board } from './components/Board/Board';
-
+import { shuffle } from './utils';
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -34,7 +34,7 @@ const App: React.FC = () => {
         <h3>Letrix</h3>
       </header>
       <section>
-        <Board words={words} />
+        <Board words={shuffle(words).slice(0, 10)} />
         <aside></aside>
       </section>
     </div>
