@@ -1,0 +1,40 @@
+.board-wrapper {
+    display: grid;
+    grid-template-rows: 4fr 1fr;
+    place-items: center;
+    .letters-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: calc(5 * (50px + 10px));
+    }
+    .dock-wrapper {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: end;
+    }
+}
+.letter {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    background: rgb(245, 222, 179);
+    border-radius: 5px;
+    color: black;
+    font-size: 2em;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 50px;
+    cursor: pointer;
+    &:hover {
+        background: rgb(245, 227, 193);
+    }
+    &.active {
+        background: rgb(194, 90, 30);
+        color: rgb(232, 255, 130);
+    }
+}
