@@ -7,8 +7,8 @@ const initState: ApplicationState = {
     active_letters: []
 };
 export const letterReducer = (state: ApplicationState = initState, action: LetterActions): ApplicationState => {
-    const { letter, x, y } = action;
-    switch (action.type) {
+    const { letter, x, y, type } = action;
+    switch (type) {
         case SET_ACTIVE_LETTER:
             return {
                 ...state,

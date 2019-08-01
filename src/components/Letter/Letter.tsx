@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch } from "react";
 import styles from '../Board/board.module.scss';
-import { Letter as LetterInterface } from "../../types/types";
+import { Letter as LetterInterface, LetterActions } from "../../types/types";
 import { connect } from "react-redux";
-import { setActiveLetter, setInactiveLetter } from '../../actions/actions';
+import { setActiveLetter as setActiveLetterAction, setInactiveLetter as setInactiveLetterAction } from '../../actions/actions';
 
 
 export interface LetterProps extends LetterInterface {
@@ -26,11 +26,9 @@ export const LetterConnected: React.FC<LetterProps> = ({ letter, x, y, setActive
         </div>
     )
 };
-function mapDispatchToProps(dispatch: any) {
-    return {
-        setActiveLetter: (letter: LetterInterface) => dispatch(setActiveLetter(letter)),
-        setInactiveLetter: (letter: LetterInterface) => dispatch(setInactiveLetter(letter)),
-    };
-}
-
+const mapDispatchToProps = (dispatch: Dispatch<LetterActions>, ownprops: any): LetterProps => ({
+    ...ownprops,
+    setActiveLetter: (letter: LetterInterface) => dispatch(setActiveLetterAction(letter)),
+    setInactiveLetter: (letter: LetterInterface) => dispatch(setInactiveLetterAction(letter)),
+})
 export const LetterComponent = connect(null, mapDispatchToProps)(LetterConnected);
