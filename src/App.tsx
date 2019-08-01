@@ -5,6 +5,7 @@ import { shuffle } from './utils';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { WordsCounterComponent } from './components/WordsCounter/WordsCounter';
+import { TimerComponent } from './components/Timer/Timer';
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -37,6 +38,7 @@ const App: React.FC = () => {
         <header className="App-header">
           <h3>Letrix</h3>
           <WordsCounterComponent wordsGoal={8} />
+          <TimerComponent timerGoal={120} />
         </header>
         <section>
           <BoardComponent words={shuffle(words).slice(0)} />
