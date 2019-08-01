@@ -1,76 +1,61 @@
 import React, { Component } from "react";
-import { Dock } from '../Dock/Dock';
-import { Letter, LetterInterface } from '../Letter/Letter';
+import { DockComponent } from '../Dock/Dock';
+import { LetterComponent } from '../Letter/Letter';
 import { getLetters } from '../../utils';
 import style from './board.module.scss';
+import { Letter, WordActions, ApplicationState } from "../../types/types";
+import { Dispatch } from "redux";
+import { setWordsToFind } from "../../actions/actions";
+import { connect } from "react-redux";
 
 const WIDTH = 5;
 const HEIGHT = 5;
 
-export interface BoardProps {
-    words: Array<string>;
-    handleWordFinded?: any;
-}
 interface BoardState {
-    words: Array<string>;
-    letters: Array<string>;
-    pressed: Array<LetterInterface>;
+    chars: Array<string>;
+    letters: Array<Letter>;
 }
+interface OwnProps {
+    words: Array<string>;
+}
+interface StateProps {
+    active_letters: Array<Letter>;
+}
+interface DispatchProps {
+    setWordsToFind: (words: Array<string>) => void;
+}
+type BoardProps = StateProps & DispatchProps & OwnProps
 export class Board extends Component<BoardProps, BoardState> {
     constructor(props: BoardProps) {
         super(props)
-        const { words } = props;
+        const { words, setWordsToFind } = props;
+        setWordsToFind(words);
+        const chars = getLetters(words);
         this.state = {
-            letters: getLetters(words),
-            words: words,
-            pressed: []
-        }
-        this.handleLetterClick = this.handleLetterClick.bind(this);
-    }
-    handleLetterClick(letter: LetterInterface) {
-        const { words, letters } = this.state;
-        let { pressed } = this.state;
-        const word: string = pressed.map(e => e.letter).join('');
-        if (words.find(e => e === word)) {
-            // letters.filter(e => {
-            //     if (pressed.find(p => p.letter === e)) {
-            //         pressed = pressed.filter(pp => e !== pp)
-            //         return false;
-            //     }
-            //     return true;
-            // })
-            this.setState({
-                ...this.state,
-
-                words: this.state.words.filter(e => e !== word),
-                pressed: []
-            });
-        } else {
-            if (pressed.find((e) => (e.x === letter.x && e.y === letter.y && letter.letter === e.letter))) {
-                this.setState({
-                    ...this.state,
-                    pressed: pressed.filter((e) => !(e.x === letter.x && e.y === letter.y && letter.letter === e.letter))
-                });
-            } else {
-                this.setState({
-                    ...this.state,
-                    pressed: [...pressed, letter]
-                });
-            }
+            chars,
+            letters: chars.slice(0, HEIGHT * WIDTH).map((letter, index) => ({ letter, x: (index % WIDTH), y: (Math.floor(index / WIDTH)) }))
         }
     }
     render() {
-        const { words, letters, pressed } = this.state;
+        const { letters } = this.state;
         return (
             <div className={style['board-wrapper']}>
                 <div className={style['letters-wrapper']}>
-                    {letters.slice(0, HEIGHT * WIDTH).map((l, index) =>
-                        <Letter key={`${index}`} letter={l} x={index} y={index} handleClick={this.handleLetterClick} />
+                    {letters.map((letter) =>
+                        <LetterComponent key={`${letter.x}_${letter.y}`} {...letter} />
                     )}
                 </div>
-                <Dock letters={pressed} words={words} handleLetterClick={this.handleLetterClick} />
+                <DockComponent />
             </div>
         )
     }
-
 }
+
+const mapStateToProps = (state: ApplicationState): StateProps => ({
+    active_letters: state.letterReducer.active_letters
+})
+const mapDispatchToProps = (dispatch: Dispatch<WordActions>): DispatchProps => ({
+    setWordsToFind: (words: Array<string>) => dispatch(setWordsToFind(words))
+});
+
+export const BoardComponent = connect(mapStateToProps, mapDispatchToProps)(Board);

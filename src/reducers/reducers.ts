@@ -1,12 +1,17 @@
-import { ApplicationState, LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions, SET_WORDS_TO_FIND } from '../types/types';
+import { LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions, SET_WORDS_TO_FIND, LettersState, WordsState } from '../types/types';
+import { combineReducers } from 'redux';
+import { compareLetters } from '../utils';
 
-// Initial state
-const initState: ApplicationState = {
-    words: [],
-    words_finded: [],
+//STATES
+const initLettersState: LettersState = {
     active_letters: []
 };
-export const letterReducer = (state: ApplicationState = initState, action: LetterActions): ApplicationState => {
+const initWordsState: WordsState = {
+    words: [],
+    words_finded: []
+};
+
+export const letterReducer = (state: LettersState = initLettersState, action: LetterActions): LettersState => {
     const { letter, x, y, type } = action;
     switch (type) {
         case SET_ACTIVE_LETTER:
@@ -20,13 +25,13 @@ export const letterReducer = (state: ApplicationState = initState, action: Lette
         case SET_INACTIVE_LETTER:
             return {
                 ...state,
-                active_letters: state.active_letters.filter(al => !(al.letter === letter && al.y === y && al.x === x))
+                active_letters: state.active_letters.filter(al => !compareLetters(al, { letter, x, y }))
             };
         default:
             return state;
     }
 }
-export const wordReducer = (state: ApplicationState = initState, action: WordActions): ApplicationState => {
+export const wordReducer = (state: WordsState = initWordsState, action: WordActions): WordsState => {
     switch (action.type) {
         case WORD_FINDED:
             const { word } = action;
@@ -44,3 +49,7 @@ export const wordReducer = (state: ApplicationState = initState, action: WordAct
             return state;
     }
 }
+export const rootReducer = combineReducers({
+    letterReducer,
+    wordReducer
+})

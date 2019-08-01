@@ -1,10 +1,6 @@
-import { createStore, combineReducers } from "redux";
-import { letterReducer, wordReducer } from "./reducers/reducers";
+import { createStore } from "redux";
+import { rootReducer } from "./reducers/reducers";
 
-
-export const rootReducer = combineReducers({
-    letterReducer: letterReducer,
-    wordReducer: wordReducer
-})
+// export type AppState = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer);

@@ -1,3 +1,4 @@
+import { Letter } from "./types/types";
 
 export function shuffle<T>(a: Array<T>): Array<T> {
     for (let i = a.length - 1; i > 0; i--) {
@@ -14,3 +15,5 @@ export function getLetters(words: Array<string>): Array<string> {
     });
     return shuffle(ret);
 }
+
+export const compareLetters = (a: Letter, b: Letter): boolean => (a.letter === b.letter && a.y === b.y && a.x === b.x);

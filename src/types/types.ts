@@ -1,14 +1,22 @@
+import { rootReducer } from "../reducers/reducers";
+
 export interface Letter {
     letter: string;
     x: number;
     y: number;
 }
 // STORE
-export interface ApplicationState {
+export interface WordsState {
     words: Array<string>;
     words_finded: Array<string>;
-    active_letters: Array<Letter>;
 }
+export interface LettersState {
+    active_letters: Array<Letter>;
+
+}
+// export type ApplicationState = WordsState & LettersState;
+export type ApplicationState = ReturnType<typeof rootReducer>
+
 
 // ACTIONS
 
@@ -17,8 +25,8 @@ export type SET_ACTIVE_LETTER = typeof SET_ACTIVE_LETTER;
 export interface SetActiveLetterAction {
     type: typeof SET_ACTIVE_LETTER;
     letter: string;
-    x?: number;
-    y?: number;
+    x: number;
+    y: number;
 }
 
 export const SET_INACTIVE_LETTER = "SET_INACTIVE_LETTER";
@@ -26,8 +34,8 @@ export type SET_INACTIVE_LETTER = typeof SET_INACTIVE_LETTER;
 export interface SetInactiveLetterAction {
     type: typeof SET_INACTIVE_LETTER;
     letter: string;
-    x?: number;
-    y?: number;
+    x: number;
+    y: number;
 }
 export type LetterActions = SetInactiveLetterAction | SetActiveLetterAction;
 

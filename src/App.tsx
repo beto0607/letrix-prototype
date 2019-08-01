@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Board } from './components/Board/Board';
+import { BoardComponent } from './components/Board/Board';
 import { shuffle } from './utils';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -37,7 +37,7 @@ const App: React.FC = () => {
           <h3>Letrix</h3>
         </header>
         <section>
-          <Board words={shuffle(words).slice(0, 10)} />
+          <BoardComponent words={shuffle(words).slice(0, 10)} />
           <aside></aside>
         </section>
       </div>
