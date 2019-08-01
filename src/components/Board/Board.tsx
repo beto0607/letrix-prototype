@@ -3,9 +3,9 @@ import { DockComponent } from '../Dock/Dock';
 import { LetterComponent } from '../Letter/Letter';
 import { getLetters, shuffle } from '../../utils';
 import style from './board.module.scss';
-import { Letter, WordActions, ApplicationState } from "../../types/types";
+import { Letter, ApplicationState, AppActions } from "../../types/types";
 import { Dispatch } from "redux";
-import { setWordsToFind } from "../../actions/actions";
+import { setWordsToFind, setInactiveLetter as setInactiveLetterAction } from "../../actions/actions";
 import { connect } from "react-redux";
 import uuid from 'uuid';
 
@@ -13,7 +13,6 @@ const WIDTH = 5;
 const HEIGHT = 5;
 
 interface BoardState {
-    index: number;
     chars: Array<string>;
     allLetters: Array<Letter>;
     letters: Array<Letter>;
@@ -28,6 +27,7 @@ interface StateProps {
 }
 interface DispatchProps {
     setWordsToFind: (words: Array<string>) => void;
+    setInactiveLetter: (letter: Letter) => void;
 }
 type BoardProps = StateProps & DispatchProps & OwnProps
 export class Board extends Component<BoardProps, BoardState> {
@@ -43,13 +43,22 @@ export class Board extends Component<BoardProps, BoardState> {
             chars,
             allLetters,
             letters,
-            remainingLetters,
-            index: HEIGHT * WIDTH
+            remainingLetters
         }
     }
     componentDidUpdate(prevProps: BoardProps) {
         if (this.props.wordsFindedCounter !== prevProps.wordsFindedCounter) {
             console.log("ENCONTRASTE UNA NUEVA PALABRA!!!");
+            const { letters, remainingLetters } = this.state;
+            const { activeLetters, setInactiveLetter } = this.props;
+            const lettersWithActiveRemoved = letters.filter((l) => !(activeLetters.find(al => al.id === l.id)))
+            const newLetters = shuffle(remainingLetters.slice(0, activeLetters.length));
+            this.setState({
+                ...this.state,
+                letters: [...lettersWithActiveRemoved, ...newLetters],
+                remainingLetters: remainingLetters.slice(activeLetters.length)
+            })
+            activeLetters.forEach(l => setInactiveLetter(l));
         }
     }
     render() {
@@ -71,8 +80,9 @@ const mapStateToProps = (state: ApplicationState): StateProps => ({
     activeLetters: state.letterReducer.activeLetters,
     wordsFindedCounter: state.wordReducer.wordsFindedCounter
 })
-const mapDispatchToProps = (dispatch: Dispatch<WordActions>): DispatchProps => ({
-    setWordsToFind: (words: Array<string>) => dispatch(setWordsToFind(words))
+const mapDispatchToProps = (dispatch: Dispatch<AppActions>): DispatchProps => ({
+    setWordsToFind: (words: Array<string>) => dispatch(setWordsToFind(words)),
+    setInactiveLetter: (letter: Letter) => dispatch(setInactiveLetterAction(letter))
 });
 
 export const BoardComponent = connect(mapStateToProps, mapDispatchToProps)(Board);

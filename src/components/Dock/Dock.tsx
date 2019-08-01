@@ -17,10 +17,11 @@ interface DispatchProps {
 }
 type DockProps = StateProps & DispatchProps;
 
-export const DockConnected: React.FC<DockProps> = ({ activeLetters, words, wordFinded, setInactiveLetter }: DockProps) => {
+// export const DockConnected: React.FC<DockProps> = ({ activeLetters, words, wordFinded, setInactiveLetter }: DockProps) => {
+export const DockConnected: React.FC<DockProps> = ({ activeLetters, words, wordFinded }: DockProps) => {
     const current_word = (activeLetters.map(l => l.letter) || []).join('');
     if (words.find(w => w === current_word)) {
-        activeLetters.forEach(l => setInactiveLetter(l));
+        // activeLetters.forEach(l => setInactiveLetter(l));
         wordFinded(current_word);
     }
     return (
