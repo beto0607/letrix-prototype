@@ -39,7 +39,14 @@ export interface WordFindedAction {
     type: typeof WORD_FINDED;
     word: string;
 }
+export const SET_WORDS_TO_FIND = "SET_WORDS_TO_FIND";
+export type SET_WORDS_TO_FIND = typeof SET_WORDS_TO_FIND;
 
-export type WordActions = WordFindedAction;
+export interface SetWordsToFindAction {
+    type: typeof SET_WORDS_TO_FIND;
+    words: Array<string>;
+}
+
+export type WordActions = WordFindedAction | SetWordsToFindAction;
 
 export type AppActions = LetterActions | WordActions;

@@ -1,4 +1,4 @@
-import { ApplicationState, LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions } from '../types/types';
+import { ApplicationState, LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions, SET_WORDS_TO_FIND } from '../types/types';
 
 // Initial state
 const initState: ApplicationState = {
@@ -34,6 +34,11 @@ export const wordReducer = (state: ApplicationState = initState, action: WordAct
                 ...state,
                 words: state.words.filter(w => w !== word),
                 words_finded: [...state.words_finded, word]
+            };
+        case SET_WORDS_TO_FIND:
+            return {
+                ...state,
+                words: action.words
             };
         default:
             return state;
