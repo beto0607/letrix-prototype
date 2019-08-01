@@ -4,6 +4,7 @@ import { BoardComponent } from './components/Board/Board';
 import { shuffle } from './utils';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { WordsCounterComponent } from './components/WordsCounter/WordsCounter';
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -35,9 +36,10 @@ const App: React.FC = () => {
       <div className="App">
         <header className="App-header">
           <h3>Letrix</h3>
+          <WordsCounterComponent wordsGoal={8} />
         </header>
         <section>
-          <BoardComponent words={shuffle(words).slice(0, 10)} />
+          <BoardComponent words={shuffle(words).slice(0)} />
           <aside></aside>
         </section>
       </div>
