@@ -1,20 +1,24 @@
 .board-wrapper {
     display: grid;
-    grid-template-rows: 4fr 1fr;
+    grid-template-rows: auto auto;
     place-items: center;
+    width: 100%;
     .letters-wrapper {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-around;
         width: calc(5 * (50px + 10px));
+        margin: 0 auto;
     }
     .dock-wrapper {
+        max-width: calc(6 * (50px + 10px));
+        width: 100%;
         margin-top: 20px;
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-end;
+        flex-wrap: wrap;
+        justify-content: start;
     }
 }
 .letter {
