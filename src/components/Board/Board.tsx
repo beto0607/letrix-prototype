@@ -1,25 +1,30 @@
 import React, { Component } from "react";
 import { DockComponent } from '../Dock/Dock';
 import { LetterComponent } from '../Letter/Letter';
-import { getLetters } from '../../utils';
+import { getLetters, shuffle } from '../../utils';
 import style from './board.module.scss';
 import { Letter, WordActions, ApplicationState } from "../../types/types";
 import { Dispatch } from "redux";
 import { setWordsToFind } from "../../actions/actions";
 import { connect } from "react-redux";
+import uuid from 'uuid';
 
 const WIDTH = 5;
 const HEIGHT = 5;
 
 interface BoardState {
+    index: number;
     chars: Array<string>;
+    allLetters: Array<Letter>;
     letters: Array<Letter>;
+    remainingLetters: Array<Letter>;
 }
 interface OwnProps {
     words: Array<string>;
 }
 interface StateProps {
-    active_letters: Array<Letter>;
+    activeLetters: Array<Letter>;
+    wordsFindedCounter: number;
 }
 interface DispatchProps {
     setWordsToFind: (words: Array<string>) => void;
@@ -30,10 +35,21 @@ export class Board extends Component<BoardProps, BoardState> {
         super(props)
         const { words, setWordsToFind } = props;
         setWordsToFind(words);
-        const chars = getLetters(words);
+        const chars: Array<string> = getLetters(this.props.words);
+        const allLetters: Array<Letter> = chars.map((c: string) => ({ letter: c, id: uuid.v1() }))
+        const letters: Array<Letter> = shuffle(allLetters.slice(0, HEIGHT * WIDTH));
+        const remainingLetters: Array<Letter> = allLetters.slice(HEIGHT * WIDTH);
         this.state = {
             chars,
-            letters: chars.slice(0, HEIGHT * WIDTH).map((letter, index) => ({ letter, x: (index % WIDTH), y: (Math.floor(index / WIDTH)) }))
+            allLetters,
+            letters,
+            remainingLetters,
+            index: HEIGHT * WIDTH
+        }
+    }
+    componentDidUpdate(prevProps: BoardProps) {
+        if (this.props.wordsFindedCounter !== prevProps.wordsFindedCounter) {
+            console.log("ENCONTRASTE UNA NUEVA PALABRA!!!");
         }
     }
     render() {
@@ -42,7 +58,7 @@ export class Board extends Component<BoardProps, BoardState> {
             <div className={style['board-wrapper']}>
                 <div className={style['letters-wrapper']}>
                     {letters.map((letter) =>
-                        <LetterComponent key={`${letter.x}_${letter.y}`} {...letter} />
+                        <LetterComponent key={letter.id} {...letter} />
                     )}
                 </div>
                 <DockComponent />
@@ -52,7 +68,8 @@ export class Board extends Component<BoardProps, BoardState> {
 }
 
 const mapStateToProps = (state: ApplicationState): StateProps => ({
-    active_letters: state.letterReducer.active_letters
+    activeLetters: state.letterReducer.activeLetters,
+    wordsFindedCounter: state.wordReducer.wordsFindedCounter
 })
 const mapDispatchToProps = (dispatch: Dispatch<WordActions>): DispatchProps => ({
     setWordsToFind: (words: Array<string>) => dispatch(setWordsToFind(words))

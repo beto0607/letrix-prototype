@@ -8,12 +8,12 @@ export function shuffle<T>(a: Array<T>): Array<T> {
     return a;
 }
 
-export function getLetters(words: Array<string>): Array<string> {
+export function getLetters(words: Array<string>, shuffleResult: boolean = false): Array<string> {
     let ret: Array<string> = [];
     shuffle(words).forEach(word => {
         ret = [...ret, ...word.split('')];
     });
-    return shuffle(ret);
+    return shuffleResult ? shuffle(ret) : ret;
 }
 
-export const compareLetters = (a: Letter, b: Letter): boolean => (a.letter === b.letter && a.y === b.y && a.x === b.x);
+export const compareLetters = (a: Letter, b: Letter): boolean => (a.id === b.id);

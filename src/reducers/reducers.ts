@@ -4,28 +4,29 @@ import { compareLetters } from '../utils';
 
 //STATES
 const initLettersState: LettersState = {
-    active_letters: []
+    activeLetters: []
 };
 const initWordsState: WordsState = {
     words: [],
-    words_finded: []
+    wordsFinded: [],
+    wordsFindedCounter: 0
 };
 
 export const letterReducer = (state: LettersState = initLettersState, action: LetterActions): LettersState => {
-    const { letter, x, y, type } = action;
+    const { letter, id, type } = action;
     switch (type) {
         case SET_ACTIVE_LETTER:
             return {
                 ...state,
-                active_letters: [
-                    ...state.active_letters,
-                    { letter: letter, x: x || -1, y: y || -1 }
+                activeLetters: [
+                    ...state.activeLetters,
+                    { letter, id }
                 ]
             };
         case SET_INACTIVE_LETTER:
             return {
                 ...state,
-                active_letters: state.active_letters.filter(al => !compareLetters(al, { letter, x, y }))
+                activeLetters: state.activeLetters.filter(al => !compareLetters(al, { letter, id }))
             };
         default:
             return state;
@@ -38,7 +39,8 @@ export const wordReducer = (state: WordsState = initWordsState, action: WordActi
             return {
                 ...state,
                 words: state.words.filter(w => w !== word),
-                words_finded: [...state.words_finded, word]
+                wordsFindedCounter: state.wordsFindedCounter + 1,
+                wordsFinded: [...state.wordsFinded, word]
             };
         case SET_WORDS_TO_FIND:
             return {
