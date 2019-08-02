@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.scss';
 import { BoardComponent } from './components/Board/Board';
 import { shuffle } from './utils';
 import { Provider } from 'react-redux';
@@ -39,9 +39,9 @@ const App: React.FC = () => {
         <meta charSet="utf-8" />
         <title>Letrix by Boemiz</title>
       </Helmet>
-      <div className="App">
-        <header className="App-header">
-          <h3>Letrix</h3>
+      <div className={styles['App']}>
+        <header className={styles["App-header"]}>
+          <h2>Letrix</h2>
           <WordsCounterComponent wordsGoal={8} />
           <TimerComponent timerGoal={10} />
         </header>
