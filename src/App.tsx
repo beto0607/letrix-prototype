@@ -9,6 +9,7 @@ import { TimerComponent } from './components/Timer/Timer';
 import { Helmet } from 'react-helmet';
 import { WordsFindedList } from './components/WordsFindedList/WordsFindedList';
 import { Category } from './types/types';
+import { CategoryTitle } from './components/CategoryTitle/CategoryTitle';
 
 const wordsByCategory: Array<Category> = [
   {
@@ -43,7 +44,7 @@ const wordsByCategory: Array<Category> = [
 ]
 
 const App: React.FC = () => {
-  const category: Category = getRandomItem(wordsByCategory);
+  const { name, words }: Category = getRandomItem(wordsByCategory);
   return (
     <Provider store={store}>
       <Helmet>
@@ -57,8 +58,8 @@ const App: React.FC = () => {
           <TimerComponent timerGoal={120} />
         </header>
         <section>
-          <CategoryTitle title={category.name}/>
-          <BoardComponent words={shuffle(category.words)} />
+          <CategoryTitle name={name} />
+          <BoardComponent words={shuffle(words)} />
         </section>
         <WordsFindedList />
       </div>
