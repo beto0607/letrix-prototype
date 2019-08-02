@@ -54,7 +54,7 @@ export const wordReducer = (state: WordsState = initWordsState, action: WordActi
             return state;
     }
 }
-export const winLoseReducer = (state: GameplayState = initGameplayState, action: GameOverAction): GameplayState => {
+export const gameOverReducer = (state: GameplayState = initGameplayState, action: GameOverAction): GameplayState => {
     const { type } = action;
     switch (type) {
         case GAME_OVER_ACTION:
@@ -66,5 +66,5 @@ export const winLoseReducer = (state: GameplayState = initGameplayState, action:
 export const rootReducer = combineReducers({
     letterReducer,
     wordReducer,
-    winLoseReducer
+    gameOverReducer
 })

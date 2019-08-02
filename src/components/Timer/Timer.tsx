@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import styles from './timer.module.scss';
-import { AppActions, ApplicationState } from "../../types/types";
+import { AppActions, ApplicationState, GameplayState } from "../../types/types";
 import { Dispatch } from "redux";
 import ms from 'pretty-ms';
 import { gameOver } from "../../actions/actions";
@@ -10,10 +10,8 @@ import { gameOver } from "../../actions/actions";
 interface OwnProps {
     timerGoal: number;//In seconds
 }
-interface StateProps {
+interface StateProps extends GameplayState {
     wordsFindedCounter: number;
-    playing: boolean;
-    win: boolean;
 }
 interface DispatchProps {
     gameOver: (win: boolean) => void;
@@ -61,10 +59,10 @@ class TimerConnected extends Component<TimerProps, TimerState>{
         );
     }
 }
-const mapStateToProps = ({ wordReducer, winLoseReducer }: ApplicationState): StateProps => ({
+const mapStateToProps = ({ wordReducer, gameOverReducer }: ApplicationState): StateProps => ({
     wordsFindedCounter: wordReducer.wordsFindedCounter,
-    playing: winLoseReducer.playing,
-    win: winLoseReducer.win
+    playing: gameOverReducer.playing,
+    win: gameOverReducer.win
 })
 const mapDispatchToProps = (dispatch: Dispatch<AppActions>): DispatchProps => ({
     gameOver: (win: boolean) => dispatch(gameOver(win))

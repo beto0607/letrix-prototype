@@ -42,8 +42,8 @@ const App: React.FC = () => {
       <div className={styles['App']}>
         <header className={styles["App-header"]}>
           <h2>Letrix</h2>
-          <WordsCounterComponent wordsGoal={8} />
-          <TimerComponent timerGoal={10} />
+          <WordsCounterComponent wordsGoal={2} />
+          <TimerComponent timerGoal={30} />
         </header>
         <section>
           <BoardComponent words={shuffle(words).slice(0)} />
