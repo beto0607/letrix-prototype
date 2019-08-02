@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { WordsCounterComponent } from './components/WordsCounter/WordsCounter';
 import { TimerComponent } from './components/Timer/Timer';
+import { Helmet } from 'react-helmet';
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -34,6 +35,10 @@ const words: Array<string> = [
 const App: React.FC = () => {
   return (
     <Provider store={store}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Letrix by Boemiz</title>
+      </Helmet>
       <div className="App">
         <header className="App-header">
           <h3>Letrix</h3>
