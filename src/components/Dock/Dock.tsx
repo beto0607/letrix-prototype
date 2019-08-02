@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import { LetterComponent } from '../Letter/Letter';
@@ -6,6 +6,7 @@ import { Letter as LetterInterface, ApplicationState, AppActions } from "../../t
 
 import styles from '../Board/board.module.scss';
 import { wordFinded, setInactiveLetter as setInactiveLetterAction } from "../../actions/actions";
+import { Dispatch } from "redux";
 
 interface StateProps {
     activeLetters: Array<LetterInterface>;
