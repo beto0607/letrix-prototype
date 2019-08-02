@@ -13,7 +13,7 @@ export interface WordsState {
 export interface LettersState {
     activeLetters: Array<Letter>;
 }
-export interface GameplayState{
+export interface GameplayState {
     playing: boolean;
     win: boolean;
 }
@@ -53,19 +53,14 @@ export interface SetWordsToFindAction {
 }
 
 export type WordActions = WordFindedAction | SetWordsToFindAction;
-// WIN-LOSE ACTIONS
-export const WIN_ACTION = "WIN_ACTION";
-export type WIN_ACTION = typeof WIN_ACTION;
-export interface WinAction {
-    type: typeof WIN_ACTION;
+// GAME OVER ACTIONS
+export const GAME_OVER_ACTION = "GAME_OVER_ACTION";
+export type GAME_OVER_ACTION = typeof GAME_OVER_ACTION;
+export interface GameOverAction {
+    type: typeof GAME_OVER_ACTION;
+    win: boolean;
 }
-
-export const LOSE_ACTION = "LOSE_ACTION";
-export type LOSE_ACTION = typeof LOSE_ACTION;
-export interface LoseAction {
-    type: typeof LOSE_ACTION;
-}
-export type WinLoseActions = WinAction | LoseAction;
+export type GameOverActions = GameOverAction;
 
 
-export type AppActions = LetterActions | WordActions | WinLoseActions;
+export type AppActions = LetterActions | WordActions | GameOverActions;

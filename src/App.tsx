@@ -38,7 +38,7 @@ const App: React.FC = () => {
         <header className="App-header">
           <h3>Letrix</h3>
           <WordsCounterComponent wordsGoal={8} />
-          <TimerComponent timerGoal={120} />
+          <TimerComponent timerGoal={10} />
         </header>
         <section>
           <BoardComponent words={shuffle(words).slice(0)} />

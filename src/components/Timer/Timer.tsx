@@ -5,7 +5,7 @@ import styles from './timer.module.scss';
 import { AppActions, ApplicationState } from "../../types/types";
 import { Dispatch } from "redux";
 import ms from 'pretty-ms';
-import { gameLost } from "../../actions/actions";
+import { gameOver } from "../../actions/actions";
 
 interface OwnProps {
     timerGoal: number;//In seconds
@@ -16,7 +16,7 @@ interface StateProps {
     win: boolean;
 }
 interface DispatchProps {
-    gameLost: () => void;
+    gameOver: (win: boolean) => void;
 }
 type TimerProps = OwnProps & StateProps & DispatchProps;
 interface TimerState {
@@ -37,9 +37,9 @@ class TimerConnected extends Component<TimerProps, TimerState>{
     }
     componentDidUpdate(prevProps: TimerProps, prevState: TimerState) {
         const { elapsedTime } = this.state;
-        const { timerGoal, playing, gameLost, win } = this.props;
+        const { timerGoal, playing, gameOver, win } = this.props;
         if (playing && elapsedTime !== prevState.elapsedTime && (timerGoal * 1000) <= elapsedTime) {
-            gameLost();
+            gameOver(false);
         }
         if (prevProps.playing !== playing) {
             clearInterval(this.timer);
@@ -67,7 +67,7 @@ const mapStateToProps = ({ wordReducer, winLoseReducer }: ApplicationState): Sta
     win: winLoseReducer.win
 })
 const mapDispatchToProps = (dispatch: Dispatch<AppActions>): DispatchProps => ({
-    gameLost: () => dispatch(gameLost())
+    gameOver: (win: boolean) => dispatch(gameOver(win))
 })
 
 export const TimerComponent = connect(mapStateToProps, mapDispatchToProps)(TimerConnected);
