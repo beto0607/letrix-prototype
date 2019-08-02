@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+
+.words-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .words-list {
+        list-style: none;
+        display: flex;
+        padding: 0;
+        width: 100%;
+        flex-wrap: wrap;
+        li {
+            flex-basis: 50%;
+            margin: 5px auto;
+            width: fit-content;
+            &.hidden{
+                color: transparent;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);                             
+            }
+            &.finded{
+                color: green;
+                text-shadow: none;
+            }
+        }
+    }
+}

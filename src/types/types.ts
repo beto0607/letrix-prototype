@@ -4,6 +4,10 @@ export interface Letter {
     letter: string;
     id: string;
 }
+export interface WordListItem{
+    word: string;
+    finded: boolean;
+}
 // STORE
 export interface WordsState {
     words: Array<string>;

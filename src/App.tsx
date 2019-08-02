@@ -7,6 +7,7 @@ import { store } from './store';
 import { WordsCounterComponent } from './components/WordsCounter/WordsCounter';
 import { TimerComponent } from './components/Timer/Timer';
 import { Helmet } from 'react-helmet';
+import { WordsFindedList } from './components/WordsFindedList/WordsFindedList';
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -47,8 +48,8 @@ const App: React.FC = () => {
         </header>
         <section>
           <BoardComponent words={shuffle(words).slice(0)} />
-          <aside></aside>
         </section>
+        <WordsFindedList />
       </div>
     </Provider>
   );

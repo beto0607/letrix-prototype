@@ -41,7 +41,7 @@ export const wordReducer = (state: WordsState = initWordsState, action: WordActi
             const { word } = action;
             return {
                 ...state,
-                words: state.words.filter(w => w !== word),
+                // words: state.words.filter(w => w !== word),
                 wordsFindedCounter: state.wordsFindedCounter + 1,
                 wordsFinded: [...state.wordsFinded, word]
             };
