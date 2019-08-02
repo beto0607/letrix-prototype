@@ -8,6 +8,7 @@ import { WordsCounterComponent } from './components/WordsCounter/WordsCounter';
 import { TimerComponent } from './components/Timer/Timer';
 import { Helmet } from 'react-helmet';
 import { WordsFindedList } from './components/WordsFindedList/WordsFindedList';
+
 const words: Array<string> = [
   'abuela',
   'abuelo',
@@ -30,7 +31,9 @@ const words: Array<string> = [
   'bisabuelo',
   'bisabuela',
   'yerno',
-  'nuera'
+  'nuera',
+  'suegro',
+  'suegra'
 ];
 
 const App: React.FC = () => {
@@ -43,11 +46,11 @@ const App: React.FC = () => {
       <div className={styles['App']}>
         <header className={styles["App-header"]}>
           <h2>Letrix</h2>
-          <WordsCounterComponent wordsGoal={2} />
-          <TimerComponent timerGoal={30} />
+          <WordsCounterComponent wordsGoal={8} />
+          <TimerComponent timerGoal={120} />
         </header>
         <section>
-          <BoardComponent words={shuffle(words).slice(0)} />
+          <BoardComponent words={shuffle(words)} />
         </section>
         <WordsFindedList />
       </div>

@@ -14,7 +14,7 @@ interface DispatchProps {
 type WordsFindedListProps = OwnProps & StateProps & DispatchProps;
 const WordListItemComponent: React.FC<WordListItem> = ({ word, finded }: WordListItem) => (
     <li className={styles[finded ? 'finded' : 'hidden']}>
-        {word}
+        {finded ? <a href={"https://es.wikipedia.org/wiki/" + word} target="_blank" rel="noopener noreferrer">{word}</a> : word}
     </li>
 )
 const WordsFindedListConnected: React.FC<WordsFindedListProps> = ({ words, wordsFinded }: WordsFindedListProps) => {
