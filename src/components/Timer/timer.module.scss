@@ -3,4 +3,11 @@
     border: 2px solid #222;
     border-radius: 5px;
     padding: 10px 20px;
+
+    &.game-won {
+        color: green;
+    }
+    &.game-lost {
+        color: red;
+    }
 }

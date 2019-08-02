@@ -1,4 +1,4 @@
-import { LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions, SET_WORDS_TO_FIND, LettersState, WordsState } from '../types/types';
+import { LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WORD_FINDED, WordActions, SET_WORDS_TO_FIND, LettersState, WordsState, GameplayState, WinLoseActions, WIN_ACTION, LOSE_ACTION } from '../types/types';
 import { combineReducers } from 'redux';
 import { compareLetters } from '../utils';
 
@@ -11,7 +11,10 @@ const initWordsState: WordsState = {
     wordsFinded: [],
     wordsFindedCounter: 0
 };
-
+const initGameplayState: GameplayState = {
+    playing: true,
+    win: false
+}
 export const letterReducer = (state: LettersState = initLettersState, action: LetterActions): LettersState => {
     const { letter, id, type } = action;
     switch (type) {
@@ -51,7 +54,19 @@ export const wordReducer = (state: WordsState = initWordsState, action: WordActi
             return state;
     }
 }
+export const winLoseReducer = (state: GameplayState = initGameplayState, action: WinLoseActions): GameplayState => {
+    const { type } = action;
+    switch (type) {
+        case WIN_ACTION:
+            return { ...state, win: true, playing: false };
+        case LOSE_ACTION:
+            return { ...state, win: false, playing: false };
+        default:
+            return state;
+    }
+}
 export const rootReducer = combineReducers({
     letterReducer,
-    wordReducer
+    wordReducer,
+    winLoseReducer
 })

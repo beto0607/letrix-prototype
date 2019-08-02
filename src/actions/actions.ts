@@ -1,4 +1,4 @@
-import { Letter, LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WordActions, WORD_FINDED, SetWordsToFindAction, SET_WORDS_TO_FIND } from '../types/types';
+import { Letter, LetterActions, SET_ACTIVE_LETTER, SET_INACTIVE_LETTER, WordActions, WORD_FINDED, SetWordsToFindAction, SET_WORDS_TO_FIND, WIN_ACTION, WinAction, LoseAction, LOSE_ACTION } from '../types/types';
 
 
 export const setActiveLetter = ({ letter, id }: Letter): LetterActions => ({
@@ -22,3 +22,7 @@ export const setWordsToFind = (words: Array<string>): SetWordsToFindAction => ({
     type: SET_WORDS_TO_FIND,
     words
 });
+
+export const gameWon = (): WinAction => ({ type: WIN_ACTION })
+
+export const gameLost = (): LoseAction => ({ type: LOSE_ACTION })
